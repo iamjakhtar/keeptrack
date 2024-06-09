@@ -2,10 +2,11 @@ import { Project } from "./Project";
 
 interface ProjectcardProps {
     project: Project;
+    onEdit: (project: Project) => void
 }
 
-export default function ProjectCard({ project }: ProjectcardProps) {
-  const handleEditClick = (project: Project) => console.log(project);
+export default function ProjectCard({ project, onEdit }: ProjectcardProps) {
+  const handleEditClick = (projectToEdit: Project) => onEdit(projectToEdit);
   return (
     <div className="card">
       <img src={project.imageUrl} alt="project name" />

@@ -1,6 +1,20 @@
-export default function ProjectForm() {
+import { SyntheticEvent } from "react";
+import { Project } from "./Project";
+
+interface ProjectFormProps {
+  onCancel: () => void;
+  onSave: (project: Project) => void;
+}
+
+export default function ProjectForm({onCancel, onSave }: ProjectFormProps) {
+
+    const handleSubmit = (event: SyntheticEvent) => {
+      event.preventDefault();
+      onSave(new Project({ name: 'Updated project'}));
+    }
+
     return (
-      <form className="input-group vertical">
+      <form className="input-group vertical" onSubmit={handleSubmit}>
         <label htmlFor="name">Project Name</label>
         <input type="text" name="name" placeholder="enter name" />
         <label htmlFor="description">Project Description</label>
@@ -15,7 +29,11 @@ export default function ProjectForm() {
         <div className="input-group">
           <button className="primary bordered medium">Save</button>
           <span></span>
-          <button type="button" className="bordered medium">
+          <button 
+          type="button" 
+          className="bordered medium"
+          onClick={onCancel}
+          >
             cancel
           </button>
         </div>
