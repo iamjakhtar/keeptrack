@@ -52,9 +52,7 @@ export default function ProjectForm({
 
     if (name.length === 0) {
       errors.name = "Name can not be empty";
-    }
-
-    if (name.length > 0 && name.length < 3) {
+    } else if (name.length > 0 && name.length < 3) {
       errors.name = "Name must be 3 or more characters";
     }
 
