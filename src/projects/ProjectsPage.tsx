@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { MOCK_PROJECTS } from "./MockProjects";
 import { Project } from "./Project";
 import ProjectList from "./ProjectList";
 import { projectApi } from "./projectApi";
@@ -32,10 +31,19 @@ const ProjectsPage = () => {
   }, [currentPage]);
 
   const saveProject = (project: Project) => {
-    let updatedProjects = projects.map((p: Project) => {
-      return p.id === project.id ? project : p;
-    });
-    setProjects(updatedProjects);
+    projectApi
+      .put(project)
+      .then(updatedProject => {
+        let updatedProjects = projects.map((p: Project) => {
+          return p.id === project.id ? new Project(updatedProject) : p;
+        });
+        setProjects(updatedProjects);
+      })
+      .catch(e => {
+        if (e instanceof Error) {
+          setError(e.message);
+        }
+      })
   };
 
   return (
