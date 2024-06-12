@@ -1,4 +1,3 @@
-import { error } from "console";
 import { Project } from "./Project";
 const baseUrl = "http://localhost:4000";
 const url = `${baseUrl}/projects`;
@@ -81,5 +80,17 @@ const projectApi = {
           );
       }
   },
+  async find(id: number) {
+    try {
+      const response = await fetch(`${url}/${id}`);
+      const data = await checkStatus(response);
+      const json = await parseToJson(data);
+      return convertToProjectModel(json);
+    } catch (error) {
+      console.log("log client error", error);
+      throw new Error(`There was an error getting the project with id ${id}`);
+    }
+  }
 };
 export { projectApi };
+

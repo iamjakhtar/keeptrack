@@ -48,7 +48,7 @@ const ProjectsPage = () => {
 
   return (
     <>
-      <h1>Projects</h1>
+      <h1 className="center-heading">Projects</h1>
       {error && (
         <div className="row center-page">
           <div className="card large error">
@@ -63,10 +63,10 @@ const ProjectsPage = () => {
       )}
       <ProjectList projects={projects} onSave={saveProject} />
       {!loading && !error && (
-        <div className="row">
-          <div className="col-sm-12">
-            <div className="button-group fluit">
-              <button className="button default" onClick={handleMoreClick}>
+        <div className="row projects-center">
+          <div className="col-md-4 col-md-offset-4">
+            <div className="button-group fluid">
+              <button className="button primary" onClick={handleMoreClick}>
                 More...
               </button>
             </div>
