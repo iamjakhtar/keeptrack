@@ -1,50 +1,32 @@
-import { useEffect, useState } from "react";
-import { Project } from "./Project";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AnyAction } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+import { AppState } from "../state";
 import ProjectList from "./ProjectList";
-import { projectApi } from "./projectApi";
+import { loadProjects } from "./state/projectActions";
+import { ProjectState } from "./state/projectTypes";
+
 
 const ProjectsPage = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>(undefined);
-  const [currentPage, setCurrentPage] = useState(1);
+
+  const {
+    page,
+    projects,
+    loading,
+    error,
+  } = useSelector((appState: AppState) => appState.projectState);
+
+  const dispatch = useDispatch<ThunkDispatch<ProjectState, any, AnyAction>>();
 
   const handleMoreClick = () => {
-    setCurrentPage((prevPage) => {
-      return 5 === prevPage ? 1 : prevPage + 1;
-    });
+    const nextPage = 5 === page ? 1 : page + 1;
+    dispatch(loadProjects(nextPage));
   };
 
   useEffect(() => {
-    const getProjects = async () => {
-      setLoading(true);
-      try {
-        const data = await projectApi.get(currentPage);
-        setProjects(data);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getProjects();
-  }, [currentPage]);
-
-  const saveProject = (project: Project) => {
-    projectApi
-      .put(project)
-      .then(updatedProject => {
-        let updatedProjects = projects.map((p: Project) => {
-          return p.id === project.id ? new Project(updatedProject) : p;
-        });
-        setProjects(updatedProjects);
-      })
-      .catch(e => {
-        if (e instanceof Error) {
-          setError(e.message);
-        }
-      })
-  };
+    dispatch(loadProjects(1));
+  }, [dispatch]);
 
   return (
     <>
@@ -61,7 +43,7 @@ const ProjectsPage = () => {
           </div>
         </div>
       )}
-      <ProjectList projects={projects} onSave={saveProject} />
+      <ProjectList projects={projects} />
       {!loading && !error && (
         <div className="row projects-center">
           <div className="col-md-4 col-md-offset-4">
