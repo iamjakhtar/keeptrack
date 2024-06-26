@@ -1,10 +1,6 @@
 import { SyntheticEvent, useState } from "react";
 import { Project } from "./Project";
-import { useDispatch } from "react-redux";
-import { ThunkDispatch } from "redux-thunk";
-import { ProjectState } from "./state/projectTypes";
-import { AnyAction } from "redux";
-import { saveProject } from "./state/projectActions";
+import { useSaveProject } from "./projectHooks";
 
 interface ProjectFormProps {
   onCancel: () => void;
@@ -22,7 +18,7 @@ export default function ProjectForm({
     budget: "",
   });
 
-  const dispatch = useDispatch<ThunkDispatch<ProjectState, any, AnyAction>>();
+  const { mutate: saveProject, isPending } = useSaveProject();
 
   const handleChange = (event: any) => {
     const { type, name, value, checked } = event.target;
@@ -83,11 +79,12 @@ export default function ProjectForm({
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
     if (!isValid()) return;
-    dispatch(saveProject(project));
+    saveProject(project);
   };
 
   return (
     <form className="input-group vertical" onSubmit={handleSubmit}>
+      {isPending && <span className="toast">Saving...</span>}
       <label htmlFor="name">Project Name</label>
       <input
         type="text"
@@ -96,12 +93,11 @@ export default function ProjectForm({
         value={project.name}
         onChange={handleChange}
       />
-      {
-        errors.name.length > 0 && 
+      {errors.name.length > 0 && (
         <div className="card error">
           <p>{errors.name}</p>
         </div>
-      }
+      )}
       <label htmlFor="description">Project Description</label>
 
       <textarea
@@ -110,12 +106,11 @@ export default function ProjectForm({
         value={project.description}
         onChange={handleChange}
       ></textarea>
-      {
-        errors.description.length > 0 &&
+      {errors.description.length > 0 && (
         <div className="card error">
           <p>{errors.description}</p>
         </div>
-      }
+      )}
       <label htmlFor="budget">Project Budget</label>
 
       <input
@@ -125,12 +120,11 @@ export default function ProjectForm({
         value={project.budget}
         onChange={handleChange}
       />
-      {
-        errors.budget.length > 0 &&
+      {errors.budget.length > 0 && (
         <div className="card error">
           <p>{errors.budget}</p>
         </div>
-      }
+      )}
       <label htmlFor="isActive">Active?</label>
       <input
         type="checkbox"

@@ -4,20 +4,6 @@ interface ProjectDetailProps {
     project: Project
 }
 const ProjectDetail = ({ project }: ProjectDetailProps) => {
-    // const { id } = useParams();
-    
-
-    // useEffect(() => {
-    //     const getProjectById = async(projectId: number) => {
-    //         try {
-    //             const res = await projectApi.find(projectId);
-    //             setProject(res);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     id && getProjectById(+id);
-    // }, [id]);
   return (
     <div className="row">
       <div className="col-sm-6">
