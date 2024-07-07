@@ -947,7 +947,7 @@
       "imageUrl": "/assets/placeimg_500_300_arch6.jpg",
       "contractTypeId": 2,
       "contractSignedOn": "2010-09-24T21:02:41.601Z",
-      "budget": 38853,
+      "budget": "900000",
       "isActive": false
     },
     {
