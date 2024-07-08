@@ -15,7 +15,7 @@ export default function ProjectCard({ project, onEdit }: ProjectcardProps) {
   const handleEditClick = (projectToEdit: Project) => onEdit(projectToEdit);
   return (
     <div className="card">
-      <img src={project.imageUrl} alt="project name" />
+      <img src={project.imageUrl} alt={project.name} />
       <section className="section dark">
         <Link to={`/projects/${project.id}`}>
           <h5 className="strong">
@@ -24,7 +24,11 @@ export default function ProjectCard({ project, onEdit }: ProjectcardProps) {
           <p>{formatDescription(project.description)}</p>
           <p>Budget : {project.budget.toLocaleString()}</p>
         </Link>
-        <button className="bordered" onClick={() => handleEditClick(project)}>
+        <button 
+          className="bordered" 
+          onClick={() => handleEditClick(project)}
+          aria-label={`edit ${project.name}`}
+        >
           <span className="icon-edit"></span>
           Edit
         </button>

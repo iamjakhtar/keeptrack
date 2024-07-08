@@ -20,6 +20,7 @@ export default function ProjectForm({
 
   const { mutate: saveProject, isPending } = useSaveProject();
 
+
   const handleChange = (event: any) => {
     const { type, name, value, checked } = event.target;
     let updatedValue =
@@ -83,7 +84,12 @@ export default function ProjectForm({
   };
 
   return (
-    <form className="input-group vertical" onSubmit={handleSubmit}>
+    <form
+      className="input-group vertical" 
+      onSubmit={handleSubmit}
+      aria-label="Edit a project"
+      name="projectForm"
+    >
       {isPending && <span className="toast">Saving...</span>}
       <label htmlFor="name">Project Name</label>
       <input
