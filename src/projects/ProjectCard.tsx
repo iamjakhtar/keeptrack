@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { Project } from "./Project";
 
 
-function formatDescription(descrption: string): string {
-  return descrption.substring(0, 60) + '...';
+export function formatDescription(descrption: string, length: number): string {
+  return descrption.substring(0, length) + '...';
 }
 
 interface ProjectcardProps {
@@ -21,7 +21,7 @@ export default function ProjectCard({ project, onEdit }: ProjectcardProps) {
           <h5 className="strong">
             <strong>{project.name}</strong>
           </h5>
-          <p>{formatDescription(project.description)}</p>
+          <p>{formatDescription(project.description, 60)}</p>
           <p>Budget : {project.budget.toLocaleString()}</p>
         </Link>
         <button 

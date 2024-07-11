@@ -1,11 +1,35 @@
 header {
   height: 5.1875rem;
+  display: flex;
+  align-items: center;
 }
 
-a.button.active {
-  border: 1px solid var(--fore-color);
+.logo {
+  margin-right: auto;
+}
+
+a.nav-link {
+  margin: 0 10px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #e41a89;
+  background-color: #e0e0e0;
+  padding: 10px;
+}
+
+a.nav-link.active {
+  color: #e0e0e0;
+  background-color: #e41a89;
+  text-decoration: none;
 }
 
 ul {
   justify-content: center;
+}
+
+.featured-projects-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 70%;
+  margin: 50px auto;
 }
